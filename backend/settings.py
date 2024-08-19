@@ -69,6 +69,7 @@ MIDDLEWARE = [
     'whitenoise.middleware.WhiteNoiseMiddleware',
 ]
 
+
 # cors 
 CORS_ALLOW_ALL_ORIGINS = True
 
@@ -80,6 +81,15 @@ CORS_ALLOW_ALL_ORIGINS = True
 
 CORS_ALLOWED_ORIGINS = [
     "https://arcade-dy.vercel.app",
+]
+
+CORS_ALLOW_METHODS = [
+    "GET",
+    "POST",
+    "PUT",
+    "PATCH",
+    "DELETE",
+    "OPTIONS",
 ]
 
 AUTH_USER_MODEL = "api.User"
