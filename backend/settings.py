@@ -33,7 +33,8 @@ SECRET_KEY = config('SECRET_KEY')
 DEBUG = config('DEBUG', cast=bool)
 
 # ALLOWED_HOSTS = ["*"]
-ALLOWED_HOSTS = config("ALLOWED_HOSTS").split(",") + ['arcade-backend-bwa0.onrender.com']
+# ALLOWED_HOSTS = config("ALLOWED_HOSTS").split(",") + ['arcade-backend-bwa0.onrender.com']
+ALLOWED_HOSTS = ["https://arcade-dy.vercel.app"]
 
 
 # Application definition
@@ -71,19 +72,11 @@ MIDDLEWARE = [
 
 
 # cors 
-CORS_ALLOW_ALL_ORIGINS = True
-
-# CORS_ALLOWED_ORIGINS = [
-#     # "http://localhost:3000",
-#     "https://vercel.com/sevenwings26s-projects/arcade-dy/5Adn8v3xmhN8vcAVKTPRw1Bx7Gzt",
-#     # "https://arcade-dy-sevenwings26s-projects.vercel.app/",
-# ]
-
 CORS_ALLOWED_ORIGINS = [
     "https://arcade-dy.vercel.app",
 ]
 
-CORS_ALLOW_METHODS = [
+CORS_ALLOWED_METHODS = [
     "GET",
     "POST",
     "PUT",
@@ -91,6 +84,13 @@ CORS_ALLOW_METHODS = [
     "DELETE",
     "OPTIONS",
 ]
+
+CORS_ALLOW_HEADERS = [
+    "Content-Type",
+    "Authorization",
+]
+
+CORS_ALLOW_CREDENTIALS = True
 
 AUTH_USER_MODEL = "api.User"
 
@@ -106,7 +106,6 @@ TEMPLATES = [
     {
         "BACKEND": "django.template.backends.django.DjangoTemplates",
         "DIRS": [],
-        # 'DIRS': [os.path.join(BASE_DIR, 'build')],
         "APP_DIRS": True,
         "OPTIONS": {
             "context_processors": [
