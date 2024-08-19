@@ -70,10 +70,16 @@ MIDDLEWARE = [
 ]
 
 # cors 
-# CORS_ALLOW_ALL_ORIGINS = True
+CORS_ALLOW_ALL_ORIGINS = True
+
+# CORS_ALLOWED_ORIGINS = [
+#     # "http://localhost:3000",
+#     "https://vercel.com/sevenwings26s-projects/arcade-dy/5Adn8v3xmhN8vcAVKTPRw1Bx7Gzt",
+#     # "https://arcade-dy-sevenwings26s-projects.vercel.app/",
+# ]
 
 CORS_ALLOWED_ORIGINS = [
-    "http://localhost:3000",
+    "https://arcade-dy.vercel.app",
 ]
 
 AUTH_USER_MODEL = "api.User"
