@@ -33,9 +33,7 @@ SECRET_KEY = config('SECRET_KEY')
 DEBUG = config('DEBUG', cast=bool)
 
 # ALLOWED_HOSTS = ["*"]
-# ALLOWED_HOSTS = config("ALLOWED_HOSTS").split(",") + ['arcade-backend-bwa0.onrender.com']
-# ALLOWED_HOSTS = ["https://arcade-dy.vercel.app"]
-ALLOWED_HOSTS = ["*"]
+ALLOWED_HOSTS = config("ALLOWED_HOSTS").split(",") + ['arcade-backend-bwa0.onrender.com']
 
 
 # Application definition
