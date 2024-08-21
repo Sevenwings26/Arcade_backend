@@ -34,9 +34,6 @@ DEBUG = config('DEBUG', cast=bool)
 
 # ALLOWED_HOSTS = ["*"]
 ALLOWED_HOSTS = config("ALLOWED_HOSTS").split(",") + ['https://arcade-backend-bwa0.onrender.com']
-# ALLOWED_HOSTS = ['https://arcade-backend-bwa0.onrender.com']
-# ALLOWED_HOSTS =  ["http://localhost:3000"]
-
 
 # Application definition
 
