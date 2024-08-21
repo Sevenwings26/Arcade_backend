@@ -33,7 +33,8 @@ SECRET_KEY = config('SECRET_KEY')
 DEBUG = config('DEBUG', cast=bool)
 
 # ALLOWED_HOSTS = ["*"]
-ALLOWED_HOSTS = config("ALLOWED_HOSTS").split(",") + ['arcade-backend-bwa0.onrender.com']
+# ALLOWED_HOSTS = config("ALLOWED_HOSTS").split(",") + ['arcade-backend-bwa0.onrender.com']
+ALLOWED_HOSTS =  ["http://localhost:3000"]
 
 
 # Application definition
@@ -50,6 +51,7 @@ INSTALLED_APPS = [
     "django.contrib.staticfiles",
     # created app 
     "api",
+
     # rest plug-ins
     "corsheaders",
     "rest_framework",
@@ -64,15 +66,18 @@ MIDDLEWARE = [
     "django.contrib.auth.middleware.AuthenticationMiddleware",
     "django.contrib.messages.middleware.MessageMiddleware",
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
+    'whitenoise.middleware.WhiteNoiseMiddleware',
     'corsheaders.middleware.CorsMiddleware',
     'django.middleware.common.CommonMiddleware',
-    'whitenoise.middleware.WhiteNoiseMiddleware',
 ]
 
+
+# Access-Control-Allow-Origin:https://arcade-dy.vercel.app
 
 # cors 
 CORS_ALLOWED_ORIGINS = [
     "https://arcade-dy.vercel.app",
+    "http://localhost:3000",
 ]
 
 CORS_ALLOWED_METHODS = [
@@ -84,12 +89,22 @@ CORS_ALLOWED_METHODS = [
     "OPTIONS",
 ]
 
-CORS_ALLOW_HEADERS = [
-    "Content-Type",
-    "Authorization",
-]
 
 CORS_ALLOW_CREDENTIALS = True
+
+CORS_ALLOW_HEADERS = [
+'accept',
+'accept-encoding',
+'authorization',
+'content-type',
+'dnt',
+'origin',
+'user-agent',
+'x-csrftoken',
+'x-requested-with',
+]
+
+CORS_ORIGIN_WHITELIST = ('http://localhost:3000',)
 
 AUTH_USER_MODEL = "api.User"
 
