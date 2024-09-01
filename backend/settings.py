@@ -13,10 +13,19 @@ https://docs.djangoproject.com/en/4.2/ref/settings/
 import os
 from pathlib import Path
 from datetime import timedelta
+
+# get .env variables
 from decouple import config
+import environ
+env = environ.Env()
+environ.Env.read_env()
+
+# database 
 import dj_database_url
-# from dotenv import load_dotenv
-# load_dotenv()
+
+
+ENVIRNOMENT = env('ENVIRONMENT', default="production")
+ENVIRNOMENT = "production"
 
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -30,10 +39,19 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = config('SECRET_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = config('DEBUG', cast=bool)
+if ENVIRNOMENT == 'development':
+    DEBUG = True
+else:
+    DEBUG = False
 
 # ALLOWED_HOSTS = ["*"]
-ALLOWED_HOSTS = config("ALLOWED_HOSTS").split(",") + ['https://arcade-backend-bwa0.onrender.com']
+# ALLOWED_HOSTS = config("ALLOWED_HOSTS").split(",") + ['https://arcade-backend-bwa0.onrender.com']
+
+
+# ALLOWED_HOSTS = ['localhost', '127.0.0.1', 'wen-render']
+ALLOWED_HOSTS = ['']
+
+# CSRF_TRUSTED_ORIGINS = [ "https://" ]
 
 # Application definition
 
@@ -54,6 +72,11 @@ INSTALLED_APPS = [
     "corsheaders",
     "rest_framework",
     'rest_framework_simplejwt',
+
+    # media 
+    'cloudinary_storage',
+    'django.contrib.staticfiles',
+    'cloudinary',
 ]
 
 MIDDLEWARE = [
@@ -140,20 +163,29 @@ WSGI_APPLICATION = "backend.wsgi.application"
 # https://docs.djangoproject.com/en/4.2/ref/settings/#databases
 
 # local db 
-DATABASES = {
-    "default": {
-        'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'arcade_dynastyDB',
-        'USER': 'postgres',
-        'PASSWORD': "iarowosola#%4956i",
-        'HOST': 'localhost',
-        'PORT': '5432'
+if ENVIRNOMENT == 'development':
+    DATABASES = {
+        "default": {
+            # 'ENGINE': 'django.db.backends.sqlite3',
+            # 'NAME': BASE_DIR / 'db.sqlite3',
+
+            # mysql setup
+            "ENGINE": "django.db.backends.mysql",
+            "NAME": "arcade-db",
+            'USER': 'root',
+            'PASSWORD': 'iarowosola9876#+',
+            'HOST': 'localhost',
+            'PORT': '3306',
+            'OPTIONS': {
+                'charset': 'utf8mb4',
+            },
+        }
     }
-}
-
-
-DATABASES["default"] = dj_database_url.parse(config("DATABASE_URL"))
-
+else:
+    DATABASES = {
+    'default':dj_database_url.parse(env("DATABASE_URL"))
+    } 
+        
 
 # Password validation
 # https://docs.djangoproject.com/en/4.2/ref/settings/#auth-password-validators
@@ -243,5 +275,24 @@ SIMPLE_JWT = {
 MEDIA_URL = 'media/'
 
 # Specify the directory where media files are stored
-MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+if ENVIRNOMENT == "development":
+    MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+else:
+    DEFAULT_FILE_STORAGE = 'cloudinary_storage.storage.MediaCloudinaryStorage'
+    CLOUDINARY_STORAGE = {
+        'CLOUDINARY_URL': env('CLOUDINARY_URL'),
+        'CLOUDINARY_CLOUD_NAME' : env('CLOUDINARY_CLOUD_NAME'),
+        'CLOUDINARY_API_KEY': env('CLOUDINARY_API_KEY'),
+     'CLOUDINARY_API_SECRET':env('CLOUDINARY_API_SECRET'),
+    }
 
+
+# settings.py
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_PORT = 587
+EMAIL_USE_TLS = True
+EMAIL_HOST_USER = env('EMAIL')
+EMAIL_HOST_PASSWORD = env("EMAIL_PASSWORD")
+DEFAULT_FROM_EMAIL = env('EMAIL')
+ACCOUNT_EMAIL_SUBJECT_PREFIX = " "
