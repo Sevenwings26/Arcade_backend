@@ -15,7 +15,7 @@ from pathlib import Path
 from datetime import timedelta
 
 # get .env variables
-from decouple import config
+# from decouple import config
 import environ
 env = environ.Env()
 environ.Env.read_env()
@@ -24,8 +24,8 @@ environ.Env.read_env()
 import dj_database_url
 
 
-ENVIRNOMENT = env('ENVIRONMENT', default="production")
-ENVIRNOMENT = "production"
+ENVIRNOMENT = env('ENVIRONMENT', default="development")
+# ENVIRNOMENT = "production"
 
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -36,7 +36,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/4.2/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = config('SECRET_KEY')
+SECRET_KEY = env('SECRET_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
 if ENVIRNOMENT == 'development':
@@ -44,14 +44,14 @@ if ENVIRNOMENT == 'development':
 else:
     DEBUG = False
 
-# ALLOWED_HOSTS = ["*"]
-# ALLOWED_HOSTS = config("ALLOWED_HOSTS").split(",") + ['https://arcade-backend-bwa0.onrender.com']
+# Hosting platforms 
+if ENVIRNOMENT == "development":
+    ALLOWED_HOSTS = []
+else:
+    ALLOWED_HOSTS = ['localhost', '127.0.0.1', '']
+    # ALLOWED_HOSTS = config("ALLOWED_HOSTS").split(",") + ['https://arcade-backend-bwa0.onrender.com']
 
-
-# ALLOWED_HOSTS = ['localhost', '127.0.0.1', 'wen-render']
-ALLOWED_HOSTS = ['']
-
-# CSRF_TRUSTED_ORIGINS = [ "https://" ]
+# CSRF_TRUSTED_ORIGINS = [ "" ]
 
 # Application definition
 
@@ -75,7 +75,6 @@ INSTALLED_APPS = [
 
     # media 
     'cloudinary_storage',
-    'django.contrib.staticfiles',
     'cloudinary',
 ]
 
@@ -114,20 +113,20 @@ CORS_ALLOWED_METHODS = [
 CORS_ALLOW_CREDENTIALS = True
 
 CORS_ALLOW_HEADERS = [
-'accept',
-'accept-encoding',
-'authorization',
-'content-type',
-'dnt',
-'origin',
-'user-agent',
-'x-csrftoken',
-'x-requested-with',
+        'accept',
+        'accept-encoding',
+        'authorization',
+        'content-type',
+        'dnt',
+        'origin',
+        'user-agent',
+        'x-csrftoken',
+        'x-requested-with',
 ]
 
 CORS_ORIGIN_WHITELIST = [
     'http://localhost:3000',
-    ]
+]
 
 AUTH_USER_MODEL = "api.User"
 
@@ -223,6 +222,7 @@ USE_TZ = True
 # This setting informs Django of the URI path from which your static files will be served to users
 # Here, they well be accessible at your-domain.onrender.com/static/... or yourcustomdomain.com/static/...
 STATIC_URL = '/static/'
+
 STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 
 # Default primary key field type
@@ -283,7 +283,7 @@ else:
         'CLOUDINARY_URL': env('CLOUDINARY_URL'),
         'CLOUDINARY_CLOUD_NAME' : env('CLOUDINARY_CLOUD_NAME'),
         'CLOUDINARY_API_KEY': env('CLOUDINARY_API_KEY'),
-     'CLOUDINARY_API_SECRET':env('CLOUDINARY_API_SECRET'),
+        'CLOUDINARY_API_SECRET':env('CLOUDINARY_API_SECRET'),
     }
 
 
@@ -295,4 +295,4 @@ EMAIL_USE_TLS = True
 EMAIL_HOST_USER = env('EMAIL')
 EMAIL_HOST_PASSWORD = env("EMAIL_PASSWORD")
 DEFAULT_FROM_EMAIL = env('EMAIL')
-ACCOUNT_EMAIL_SUBJECT_PREFIX = " "
+ACCOUNT_EMAIL_SUBJECT_PREFIX = "Arcade-dynasty"
