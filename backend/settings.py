@@ -48,10 +48,14 @@ else:
 if ENVIRNOMENT == "development":
     ALLOWED_HOSTS = []
 else:
-    ALLOWED_HOSTS = ['localhost', '127.0.0.1', 'arcade-backend-1.onrender.com/']
+    ALLOWED_HOSTS = ['localhost', '127.0.0.1', 'arcade-backend-1.onrender.com']
     # ALLOWED_HOSTS = config("ALLOWED_HOSTS").split(",") + ['https://arcade-backend-bwa0.onrender.com']
 
-CSRF_TRUSTED_ORIGINS = [ "https://arcade-backend-1.onrender.com" ]
+CSRF_TRUSTED_ORIGINS = [
+    "https://arcade-backend-1.onrender.com",
+    "https://arcade-dy.vercel.app"
+]
+
 
 # Application definition
 
@@ -98,6 +102,7 @@ MIDDLEWARE = [
 CORS_ALLOWED_ORIGINS = [
     "https://arcade-dy.vercel.app",
     "http://localhost:3000",
+    "https://arcade-backend-1.onrender.com",
 ]
 
 CORS_ALLOWED_METHODS = [
