@@ -24,8 +24,8 @@ environ.Env.read_env()
 import dj_database_url
 
 
-ENVIRNOMENT = env('ENVIRONMENT', default="development")
-# ENVIRNOMENT = "production"
+# ENVIRNOMENT = env('ENVIRONMENT', default="development")
+ENVIRNOMENT = "production"
 
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -48,10 +48,10 @@ else:
 if ENVIRNOMENT == "development":
     ALLOWED_HOSTS = []
 else:
-    ALLOWED_HOSTS = ['localhost', '127.0.0.1', '']
+    ALLOWED_HOSTS = ['localhost', '127.0.0.1', 'arcade-backend-1.onrender.com/']
     # ALLOWED_HOSTS = config("ALLOWED_HOSTS").split(",") + ['https://arcade-backend-bwa0.onrender.com']
 
-# CSRF_TRUSTED_ORIGINS = [ "" ]
+CSRF_TRUSTED_ORIGINS = [ "https://arcade-backend-1.onrender.com" ]
 
 # Application definition
 
