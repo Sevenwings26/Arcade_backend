@@ -24,7 +24,7 @@ environ.Env.read_env()
 import dj_database_url
 
 
-# ENVIRNOMENT = env('ENVIRONMENT', default="development")
+ENVIRNOMENT = env('ENVIRONMENT', default="development")
 ENVIRNOMENT = "production"
 
 
