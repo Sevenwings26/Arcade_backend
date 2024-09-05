@@ -54,6 +54,7 @@ else:
 CSRF_TRUSTED_ORIGINS = [
     "https://arcade-backend-1.onrender.com",
     "https://arcade-dy.vercel.app"
+    "https://arcade-frontend-lo4d.vercel.app"
 ]
 
 
