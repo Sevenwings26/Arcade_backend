@@ -25,7 +25,7 @@ import dj_database_url
 
 
 ENVIRNOMENT = env('ENVIRONMENT', default="development")
-# ENVIRNOMENT = "production"
+ENVIRNOMENT = "production"
 
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
