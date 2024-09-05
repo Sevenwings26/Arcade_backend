@@ -2,6 +2,14 @@ from django.db import models
 from django.contrib.auth.models import AbstractUser
 from django.db.models.signals import post_save
 
+# password 
+from django_rest_passwordreset.signals import reset_password_token_created
+from django.dispatch import receiver
+from django.urls import reverse 
+from django.template.loader import render_to_string
+from django.core.mail import EmailMultiAlternatives
+from django.utils.html import strip_tags
+
 
 class User(AbstractUser):
     username = models.CharField(max_length=100)
@@ -32,6 +40,35 @@ post_save.connect(create_user_profile, sender=User)
 post_save.connect(save_user_profile, sender=User)
 # Settled authentication
  
+ 
+# password reset config 
+@receiver(reset_password_token_created)
+def password_reset_token_created(reset_password_token, *args, **kwargs):
+    sitelink = "http://localhost:3000/"
+    token = "?token{}".format(reset_password_token.key)
+    full_link = str(sitelink)+str("password reset")+str(token)
+
+    print(f"Token - {token}")
+    print(f"Full Link - {full_link}")
+
+    context = {
+        "full_link":full_link,
+        "email_address": reset_password_token.user.email,
+    }
+
+    html_message = render_to_string("backend/email.html", context=context)
+    plain_message = strip_tags(html_message)
+
+    msg = EmailMultiAlternatives(
+        subject = "Request for reseting password for {title}".format(title=reset_password_token.user.email),
+        body = plain_message,
+        from_email = "lastborn.ai@gmail.com",
+        to={reset_password_token.user.email},
+    )
+
+    msg.attach_alternative(html_message, "text/html")
+    msg.send()
+
 
 # Hero - section model 
 class CarouselImage(models.Model):

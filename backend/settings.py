@@ -25,7 +25,7 @@ import dj_database_url
 
 
 ENVIRNOMENT = env('ENVIRONMENT', default="development")
-ENVIRNOMENT = "production"
+# ENVIRNOMENT = "production"
 
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -69,13 +69,15 @@ INSTALLED_APPS = [
     "django.contrib.sessions",
     "django.contrib.messages",
     "django.contrib.staticfiles",
+    
     # created app 
     "api",
 
     # rest plug-ins
-    "corsheaders",
     "rest_framework",
+    "corsheaders",
     'rest_framework_simplejwt',
+    'django_rest_passwordreset',
 
     # media 
     'cloudinary_storage',
@@ -135,6 +137,10 @@ CORS_ORIGIN_WHITELIST = [
 
 AUTH_USER_MODEL = "api.User"
 
+AUTHENTICATION_BACKENDS = [
+    'django.contrib.auth.backends.ModelBackend'
+]
+
 REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES': (
         'rest_framework_simplejwt.authentication.JWTAuthentication',
@@ -146,7 +152,7 @@ ROOT_URLCONF = "backend.urls"
 TEMPLATES = [
     {
         "BACKEND": "django.template.backends.django.DjangoTemplates",
-        "DIRS": [],
+        "DIRS": [os.path.join(BASE_DIR/'templates')],
         "APP_DIRS": True,
         "OPTIONS": {
             "context_processors": [
@@ -301,3 +307,4 @@ EMAIL_HOST_USER = env('EMAIL')
 EMAIL_HOST_PASSWORD = env("EMAIL_PASSWORD")
 DEFAULT_FROM_EMAIL = env('EMAIL')
 ACCOUNT_EMAIL_SUBJECT_PREFIX = "Arcade-dynasty"
+
